@@ -8,9 +8,9 @@ namespace WebAddressbookTests
         [Test]
         public void ClientCreationTest()
         {
-            navigationHelper.GoToHomePage();
-            loginHelper.Login(new AccountData("admin", "secret"));
-            contactHelper.InitClientCreation();
+            app.Navigator.GoToHomePage();
+            app.Auth.Login(new AccountData("admin", "secret"));
+            app.Contacts.InitClientCreation();
             ContactData contact = new ContactData("aaa","bbb","ccc");
             contact.Home = "111";
             contact.Homepage = "qqq";
@@ -33,9 +33,9 @@ namespace WebAddressbookTests
             contact.Aday = "20";
             contact.Address2 = "ppp";
             contact.Address = "xxx";
-            contactHelper.FillClientForm(contact);
-            contactHelper.SubmitClientCreation();
-            loginHelper.Logout();
+            app.Contacts.FillClientForm(contact);
+            app.Contacts.SubmitClientCreation();
+            app.Auth.Logout();
         }
     }
 }
