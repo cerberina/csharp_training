@@ -8,9 +8,7 @@ namespace WebAddressbookTests
         [Test]
         public void ClientCreationTest()
         {
-            ContactData contact = new ContactData("aaa","bbb","ccc");
-            app.Contacts.Create(contact);
-
+            ContactData contact = new ContactData("aaa", "bbb", "ccc");
             contact.Home = "111";
             contact.Homepage = "qqq";
             contact.Mobile = "123";
@@ -32,7 +30,8 @@ namespace WebAddressbookTests
             contact.Aday = "20";
             contact.Address2 = "ppp";
             contact.Address = "xxx";
-
+            
+            app.Contacts.Create(contact);
             app.Auth.Logout();
         }
     }

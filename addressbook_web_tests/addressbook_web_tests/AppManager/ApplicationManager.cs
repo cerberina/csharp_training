@@ -18,14 +18,14 @@ namespace WebAddressbookTests
 
         public ApplicationManager ()
         {
-        loginHelper = new LoginHelper(this);
-        navigationHelper = new NavigationHelper(this, baseURL);
-        groupHelper = new GroupHelper(this);
-        contactHelper = new ContactHelper(this);
-
-
             driver = new FirefoxDriver();
             baseURL = "http://10.0.2.2/addressbook/index.php";
+
+            loginHelper = new LoginHelper(this);
+            navigationHelper = new NavigationHelper(this, baseURL);
+            groupHelper = new GroupHelper(this);
+            contactHelper = new ContactHelper(this);
+
             //verificationErrors = new StringBuilder();
             //loginHelper = new LoginHelper(driver);
             //navigationHelper = new NavigationHelper(driver, baseURL);

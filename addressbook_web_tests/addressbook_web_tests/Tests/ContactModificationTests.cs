@@ -36,7 +36,7 @@ namespace WebAddressbookTests
             newData.Address2 = "lll";
             newData.Address = "kkk";
 
-            app.Contacts.Modify(1, newData);
+            app.Contacts.Modify(newData);
             app.Auth.Logout();
         }
     }

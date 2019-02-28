@@ -19,18 +19,50 @@ namespace WebAddressbookTests
             return this;
         }
 
-        internal void Modify(int v, ContactData newData)
+        public ContactHelper Modify(ContactData newData)
         {
-            throw new NotImplementedException();
+            manager.Navigator.GoToHomePage();
+
+            InitContactModification();
+            FillClientForm(newData);
+            SubmitContactModification();
+            manager.Navigator.GoToHomePage();
+            return this;
+        }
+
+        private ContactHelper SubmitContactModification()
+        {
+            driver.FindElement(By.Name("update")).Click();
+            return this;
+        }
+
+        private ContactHelper InitContactModification()
+        {
+            driver.FindElement(By.XPath("//img[@alt='Edit']")).Click();
+            return this;
         }
 
         internal ContactHelper Remove(int v)
         {
             manager.Navigator.GoToHomePage();
-            SelectContact(v);
+          
+            SelectContact();
             RemoveContact();
-            ReturnsToHomePage();
+            manager.Navigator.GoToHomePage();
 
+            return this;
+        }
+
+        public ContactHelper RemoveContact()
+        {
+            driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
+            driver.SwitchTo().Alert().Accept();
+            return this;
+        }
+
+        public ContactHelper SelectContact()
+        {
+            driver.FindElement(By.Name("selected[]")).Click();
             return this;
         }
 
