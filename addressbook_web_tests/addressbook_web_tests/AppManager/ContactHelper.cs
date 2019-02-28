@@ -1,19 +1,46 @@
-﻿using OpenQA.Selenium;
+﻿using System;
+using OpenQA.Selenium;
 
 namespace WebAddressbookTests
 {
     public class ContactHelper : HelperBase
     {
-        public ContactHelper(IWebDriver driver) : base(driver)
+        public ContactHelper(ApplicationManager manager) : base(manager)
         {
         }
 
-        public void SubmitClientCreation()
+        public ContactHelper Create(ContactData contact)
+        {
+            manager.Navigator.GoToHomePage();
+            InitClientCreation();
+            FillClientForm(contact);
+            SubmitClientCreation();
+            
+            return this;
+        }
+
+        internal void Modify(int v, ContactData newData)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal ContactHelper Remove(int v)
+        {
+            manager.Navigator.GoToHomePage();
+            SelectContact(v);
+            RemoveContact();
+            ReturnsToHomePage();
+
+            return this;
+        }
+
+        public ContactHelper SubmitClientCreation()
         {
             driver.FindElement(By.XPath("(//input[@name='submit'])[2]")).Click();
+            return this;
         }
 
-        public void FillClientForm(ContactData client)
+        public ContactHelper FillClientForm(ContactData client)
         {
             driver.FindElement(By.Name("firstname")).Clear();
             driver.FindElement(By.Name("firstname")).SendKeys(client.FirstName);
@@ -59,11 +86,13 @@ namespace WebAddressbookTests
             driver.FindElement(By.Name("phone2")).SendKeys(client.Phone2);
             driver.FindElement(By.Name("notes")).Clear();
             driver.FindElement(By.Name("notes")).SendKeys(client.Notes);
+            return this;
         }
 
-        public void InitClientCreation()
+        public ContactHelper InitClientCreation()
         {
             driver.FindElement(By.LinkText("add new")).Click();
+            return this;
         }
     }
 }

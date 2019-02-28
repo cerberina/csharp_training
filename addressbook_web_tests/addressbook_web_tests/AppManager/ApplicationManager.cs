@@ -5,7 +5,7 @@ using OpenQA.Selenium.Firefox;
 
 namespace WebAddressbookTests
 {
-    class ApplicationManager
+    public class ApplicationManager
     {
         protected IWebDriver driver;
         private StringBuilder verificationErrors;
@@ -18,19 +18,28 @@ namespace WebAddressbookTests
 
         public ApplicationManager ()
         {
-        loginHelper = new LoginHelper(driver);
-        navigationHelper = new NavigationHelper(driver, baseURL);
-        groupHelper = new GroupHelper(driver);
-        contactHelper = new ContactHelper(driver);
+        loginHelper = new LoginHelper(this);
+        navigationHelper = new NavigationHelper(this, baseURL);
+        groupHelper = new GroupHelper(this);
+        contactHelper = new ContactHelper(this);
 
 
             driver = new FirefoxDriver();
             baseURL = "http://10.0.2.2/addressbook/index.php";
-            verificationErrors = new StringBuilder();
-            loginHelper = new LoginHelper(driver);
-            navigationHelper = new NavigationHelper(driver, baseURL);
-            groupHelper = new GroupHelper(driver);
-            contactHelper = new ContactHelper(driver);
+            //verificationErrors = new StringBuilder();
+            //loginHelper = new LoginHelper(driver);
+            //navigationHelper = new NavigationHelper(driver, baseURL);
+            //groupHelper = new GroupHelper(driver);
+            //contactHelper = new ContactHelper(driver);
+        }
+
+
+        public IWebDriver Driver
+        {
+            get
+            {
+                return driver;
+            }
         }
         public void Stop ()
         {
