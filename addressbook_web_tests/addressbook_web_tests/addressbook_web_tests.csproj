@@ -94,6 +94,7 @@
     <Compile Include="Tests\GroupCreationTests.cs" />
     <Compile Include="Tests\ContactCreationTests.cs" />
     <Compile Include="Tests\GroupRemovalTests.cs" />
+    <Compile Include="Tests\TestSuiteFixture.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
