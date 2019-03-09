@@ -1,5 +1,6 @@
 ﻿using System;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 
 namespace WebAddressbookTests
 {
@@ -22,7 +23,11 @@ namespace WebAddressbookTests
         public ContactHelper Modify(ContactData newData)
         {
             manager.Navigator.GoToHomePage();
-
+            if (! IsElementPresent(By.Name("selected[]")))
+            {
+                ContactData con = new ContactData("test","test1","test2");
+                Create(con);
+            }
             InitContactModification();
             FillClientForm(newData);
             SubmitContactModification();
@@ -38,15 +43,18 @@ namespace WebAddressbookTests
 
         private ContactHelper InitContactModification()
         {
+            WebDriverWait wait = new WebDriverWait(driver,TimeSpan.FromSeconds(10));
+            wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath("//img[@alt='Edit']")));
             driver.FindElement(By.XPath("//img[@alt='Edit']")).Click();
             return this;
         }
 
-        internal ContactHelper Remove(int v)
+        internal ContactHelper Remove()
         {
             manager.Navigator.GoToHomePage();
           
             SelectContact();
+
             RemoveContact();
             manager.Navigator.GoToHomePage();
 
@@ -55,6 +63,9 @@ namespace WebAddressbookTests
 
         public ContactHelper RemoveContact()
         {
+            
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+            wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath("//input[@value='Delete']")));
             driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
             driver.SwitchTo().Alert().Accept();
             return this;
@@ -62,6 +73,16 @@ namespace WebAddressbookTests
 
         public ContactHelper SelectContact()
         {
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+            wait.Until(ExpectedConditions.ElementIsVisible(By.Id("maintable")));
+            
+            if (!IsElementPresent(By.Name("selected[]")))
+            {
+                ContactData con = new ContactData("test", "test1", "test2");
+                Create(con);
+            }
+            WebDriverWait wait2 = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+            wait2.Until(ExpectedConditions.ElementToBeClickable(By.Name("selected[]")));
             driver.FindElement(By.Name("selected[]")).Click();
             return this;
         }
@@ -103,6 +124,8 @@ namespace WebAddressbookTests
 
         public ContactHelper InitClientCreation()
         {
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+            wait.Until(ExpectedConditions.ElementToBeClickable(By.LinkText("add new")));
             driver.FindElement(By.LinkText("add new")).Click();
             return this;
         }

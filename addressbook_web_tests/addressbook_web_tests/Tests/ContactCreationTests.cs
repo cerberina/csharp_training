@@ -22,12 +22,12 @@ namespace WebAddressbookTests
             contact.Email2 = "uuu";
             contact.Email = "iii";
             contact.Company = "ooo";
-            contact.Byear = "1980";
-            contact.Bmonth = "November";
-            contact.Bday = "12";
-            contact.Ayear = "1990";
-            contact.Amonth = "September";
-            contact.Aday = "20";
+            //contact.Byear = "1980";
+            //contact.Bmonth = "November";
+            //contact.Bday = "12";
+            //contact.Ayear = "1990";
+            //contact.Amonth = "September";
+            //contact.Aday = "20";
             contact.Address2 = "ppp";
             contact.Address = "xxx";
             

@@ -27,12 +27,12 @@ namespace WebAddressbookTests
             newData.Email2 = "ttt";
             newData.Email = "uuu";
             newData.Company = "iii";
-            newData.Byear = "1990";
-            newData.Bmonth = "September";
-            newData.Bday = "21";
-            newData.Ayear = "2000";
-            newData.Amonth = "November";
-            newData.Aday = "30";
+            //newData.Byear = "1990";
+            //newData.Bmonth = "September";
+            //newData.Bday = "21";
+            //newData.Ayear = "2000";
+            //newData.Amonth = "November";
+            //newData.Aday = "30";
             newData.Address2 = "lll";
             newData.Address = "kkk";
 
