@@ -12,11 +12,18 @@ namespace WebAddressbookTests
         }
         public void GoToHomePage()
         {
-            driver.Navigate().GoToUrl(baseURL);
+            if (driver.Url != baseURL)
+            {
+                driver.Navigate().GoToUrl(baseURL);
+            }
         }
 
         public void GoToGroupsPage()
         {
+            if (driver.Url == baseURL + "/group.php" && IsElementPresent(By.Name("new")))
+            {
+                return;
+            }
             driver.FindElement(By.LinkText("groups")).Click();
         }
     }

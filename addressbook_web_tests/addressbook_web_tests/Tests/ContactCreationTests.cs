@@ -32,7 +32,7 @@ namespace WebAddressbookTests
             contact.Address = "xxx";
             
             app.Contacts.Create(contact);
-            app.Auth.Logout();
+            //app.Auth.Logout();
         }
     }
 }

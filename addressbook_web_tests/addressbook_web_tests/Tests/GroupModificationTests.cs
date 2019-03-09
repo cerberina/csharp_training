@@ -18,7 +18,7 @@ namespace WebAddressbookTests
             newData.Footer = null;
 
             app.Groups.Modify(1, newData);
-            app.Auth.Logout();
+            //app.Auth.Logout();
         }
     }
 }

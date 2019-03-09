@@ -1,4 +1,6 @@
 ﻿using NUnit.Framework;
+using System;
+using OpenQA.Selenium;
 
 namespace WebAddressbookTests
 {
@@ -9,7 +11,7 @@ namespace WebAddressbookTests
         public void GroupRemovalTest()
         {
             app.Groups.Remove(1);
-            app.Auth.Logout();
+            //app.Auth.Logout();
         }
     }
 }

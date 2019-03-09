@@ -22,7 +22,7 @@ namespace WebAddressbookTests
         private ApplicationManager ()
         {
             driver = new FirefoxDriver();
-            baseURL = "http://10.0.2.2/addressbook/index.php";
+            baseURL = "http://10.0.2.2/addressbook/";
 
             loginHelper = new LoginHelper(this);
             navigationHelper = new NavigationHelper(this, baseURL);
