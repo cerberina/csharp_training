@@ -1,5 +1,6 @@
 ﻿using System;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 
 
 namespace WebAddressbookTests
@@ -13,7 +14,9 @@ namespace WebAddressbookTests
         public GroupHelper Remove(int v)
         {
             manager.Navigator.GoToGroupsPage();
-            if (! IsElementPresent(By.Name("selected[]")))
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+            wait.Until(ExpectedConditions.ElementIsVisible(By.Name("delete")));
+            if (! IsGroupExist())
             {
                 GroupData gr = new GroupData("test");
                 Create(gr);
@@ -26,7 +29,9 @@ namespace WebAddressbookTests
         public GroupHelper Modify(int p, GroupData newData)
         {
             manager.Navigator.GoToGroupsPage();
-            if (! IsElementPresent(By.Name("selected[]")))
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+            wait.Until(ExpectedConditions.ElementIsVisible(By.Name("edit")));
+            if (!IsGroupExist())
             {
                 GroupData gr = new GroupData("test");
                 Create(gr);
@@ -98,6 +103,15 @@ namespace WebAddressbookTests
         {
             driver.FindElement(By.Name("edit")).Click();
             return this;
+        }
+
+        public bool IsTheGroupPageIsOpened()
+        {
+            return (driver.FindElement(By.Id("content")).FindElement(By.TagName("h1")).Text == "Groups") && IsElementPresent(By.Name("new"));
+        }
+        public bool IsGroupExist()
+        {
+            return IsTheGroupPageIsOpened() && IsElementPresent(By.Name("selected[]"));
         }
     }
 }
