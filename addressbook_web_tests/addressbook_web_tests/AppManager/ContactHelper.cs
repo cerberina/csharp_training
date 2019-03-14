@@ -1,6 +1,7 @@
 ﻿using System;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
+using System.Collections.Generic;
 
 namespace WebAddressbookTests
 {
@@ -139,5 +140,21 @@ namespace WebAddressbookTests
             };
         }
 
+        public List<ContactData> GetContactList()
+        {
+            List<ContactData> contacts = new List<ContactData>();
+            manager.Navigator.GoToHomePage();
+            ICollection<IWebElement> elements = driver.FindElements(By.Name("entry"));
+            foreach (IWebElement element in elements)
+            {
+                ICollection<IWebElement> cellElements = element.FindElements(By.TagName("td"));
+                IWebElement[] contactCells = new IWebElement[cellElements.Count];
+                cellElements.CopyTo(contactCells, 0);
+                
+                contacts.Add(new ContactData(contactCells[2].Text, "", contactCells[1].Text));
+            }
+
+            return contacts;
+        }
     }
 }
