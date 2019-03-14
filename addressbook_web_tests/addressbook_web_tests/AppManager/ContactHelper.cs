@@ -25,11 +25,6 @@ namespace WebAddressbookTests
             manager.Navigator.GoToHomePage();
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
             wait.Until(ExpectedConditions.ElementIsVisible(By.Id("maintable")));
-            if (!IsContactExists())
-            {
-                ContactData con = new ContactData("test","test1","test2");
-                Create(con);
-            }
             InitContactModification();
             FillClientForm(newData);
             SubmitContactModification();
@@ -56,11 +51,6 @@ namespace WebAddressbookTests
             manager.Navigator.GoToHomePage();
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
             wait.Until(ExpectedConditions.ElementIsVisible(By.Id("maintable")));
-            if (!IsContactExists())
-            {
-                ContactData con = new ContactData("test", "test1", "test2");
-                Create(con);
-            }
             SelectContact();
             RemoveContact();
             manager.Navigator.GoToHomePage();
@@ -134,6 +124,19 @@ namespace WebAddressbookTests
         public bool IsTheHomePageIsOpened()
         {
             return IsElementPresent(By.Id("maintable"));
+        }
+
+
+        public void EnsureContactExists()
+        {
+            manager.Navigator.GoToHomePage();
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+            wait.Until(ExpectedConditions.ElementIsVisible(By.Id("maintable")));
+            if (!IsContactExists())
+            {
+                ContactData con = new ContactData("test", "test1", "test2");
+                Create(con);
+            };
         }
 
     }

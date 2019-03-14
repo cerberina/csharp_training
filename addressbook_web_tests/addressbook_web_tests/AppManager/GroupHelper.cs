@@ -16,11 +16,6 @@ namespace WebAddressbookTests
             manager.Navigator.GoToGroupsPage();
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
             wait.Until(ExpectedConditions.ElementIsVisible(By.Name("delete")));
-            if (! IsGroupExist())
-            {
-                GroupData gr = new GroupData("test");
-                Create(gr);
-            }
             SelectGroup(v);
             RemoveGroup();
             ReturnsToGroupPage();
@@ -31,11 +26,6 @@ namespace WebAddressbookTests
             manager.Navigator.GoToGroupsPage();
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
             wait.Until(ExpectedConditions.ElementIsVisible(By.Name("edit")));
-            if (!IsGroupExist())
-            {
-                GroupData gr = new GroupData("test");
-                Create(gr);
-            }
             SelectGroup(p);
             InitGroupModification();
             FillGroupForm(newData);
@@ -112,6 +102,18 @@ namespace WebAddressbookTests
         public bool IsGroupExist()
         {
             return IsTheGroupPageIsOpened() && IsElementPresent(By.Name("selected[]"));
+        }
+
+        public void EnsureGroupExists()
+        {
+            manager.Navigator.GoToGroupsPage();
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+            wait.Until(ExpectedConditions.ElementIsVisible(By.Name("edit")));
+            if (!IsGroupExist())
+            {
+                GroupData gr = new GroupData("test");
+                Create(gr);
+            }
         }
     }
 }
