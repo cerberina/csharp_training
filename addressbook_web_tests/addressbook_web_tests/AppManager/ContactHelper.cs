@@ -21,12 +21,12 @@ namespace WebAddressbookTests
             return this;
         }
 
-        public ContactHelper Modify(ContactData newData)
+        public ContactHelper Modify(int t,ContactData newData)
         {
             manager.Navigator.GoToHomePage();
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
             wait.Until(ExpectedConditions.ElementIsVisible(By.Id("maintable")));
-            InitContactModification();
+            InitContactModification(t);
             FillClientForm(newData);
             SubmitContactModification();
             manager.Navigator.GoToHomePage();
@@ -39,20 +39,25 @@ namespace WebAddressbookTests
             return this;
         }
 
-        private ContactHelper InitContactModification()
+        private ContactHelper InitContactModification(int j)
         {
             WebDriverWait wait = new WebDriverWait(driver,TimeSpan.FromSeconds(10));
             wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath("//img[@alt='Edit']")));
-            driver.FindElement(By.XPath("//img[@alt='Edit']")).Click();
+
+            ICollection<IWebElement> pencils = driver.FindElements(By.XPath("//img[@alt='Edit']"));
+            IWebElement[] selectPencils = new IWebElement[pencils.Count];
+            pencils.CopyTo(selectPencils, 0);
+
+            selectPencils[j].Click();
             return this;
         }
 
-        internal ContactHelper Remove()
+        internal ContactHelper Remove(int v)
         {
             manager.Navigator.GoToHomePage();
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
             wait.Until(ExpectedConditions.ElementIsVisible(By.Id("maintable")));
-            SelectContact();
+            SelectContact(v);
             RemoveContact();
             manager.Navigator.GoToHomePage();
 
@@ -66,11 +71,16 @@ namespace WebAddressbookTests
             return this;
         }
 
-        public ContactHelper SelectContact()
+        public ContactHelper SelectContact(int i)
         {
             WebDriverWait wait2 = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
             wait2.Until(ExpectedConditions.ElementToBeClickable(By.Name("selected[]")));
-            driver.FindElement(By.Name("selected[]")).Click();
+
+            ICollection<IWebElement> checkboxes = driver.FindElements(By.Name("selected[]"));
+            IWebElement[] selectBoxes = new IWebElement[checkboxes.Count];
+            checkboxes.CopyTo(selectBoxes, 0);
+
+            selectBoxes[i].Click();
             return this;
         }
 
@@ -142,8 +152,12 @@ namespace WebAddressbookTests
 
         public List<ContactData> GetContactList()
         {
-            List<ContactData> contacts = new List<ContactData>();
             manager.Navigator.GoToHomePage();
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+            wait.Until(ExpectedConditions.ElementIsVisible(By.Id("maintable")));
+
+            List<ContactData> contacts = new List<ContactData>();
+            
             ICollection<IWebElement> elements = driver.FindElements(By.Name("entry"));
             foreach (IWebElement element in elements)
             {

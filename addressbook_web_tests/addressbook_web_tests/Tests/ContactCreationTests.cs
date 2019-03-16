@@ -9,7 +9,7 @@ namespace WebAddressbookTests
         [Test]
         public void ClientCreationTest()
         {
-            ContactData contact = new ContactData("aaa", "bbb", "ccc");
+            ContactData contact = new ContactData("eee", "333", "vvv");
             contact.Home = "111";
             contact.Homepage = "qqq";
             contact.Mobile = "123";
