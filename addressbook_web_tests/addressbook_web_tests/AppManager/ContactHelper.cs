@@ -36,6 +36,7 @@ namespace WebAddressbookTests
         private ContactHelper SubmitContactModification()
         {
             driver.FindElement(By.Name("update")).Click();
+            contactCache = null;
             return this;
         }
 
@@ -68,6 +69,7 @@ namespace WebAddressbookTests
         {
             driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
             driver.SwitchTo().Alert().Accept();
+            contactCache = null;
             return this;
         }
 
@@ -87,6 +89,7 @@ namespace WebAddressbookTests
         public ContactHelper SubmitClientCreation()
         {
             driver.FindElement(By.XPath("(//input[@name='submit'])[2]")).Click();
+            contactCache = null;
             return this;
         }
 
@@ -150,25 +153,30 @@ namespace WebAddressbookTests
             };
         }
 
+        private List<ContactData> contactCache = null;
+
         public List<ContactData> GetContactList()
         {
             manager.Navigator.GoToHomePage();
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
             wait.Until(ExpectedConditions.ElementIsVisible(By.Id("maintable")));
 
-            List<ContactData> contacts = new List<ContactData>();
-            
-            ICollection<IWebElement> elements = driver.FindElements(By.Name("entry"));
-            foreach (IWebElement element in elements)
+            if (contactCache ==null)
             {
-                ICollection<IWebElement> cellElements = element.FindElements(By.TagName("td"));
-                IWebElement[] contactCells = new IWebElement[cellElements.Count];
-                cellElements.CopyTo(contactCells, 0);
-                
-                contacts.Add(new ContactData(contactCells[2].Text, "", contactCells[1].Text));
+                contactCache = new List<ContactData>();
+
+                ICollection<IWebElement> elements = driver.FindElements(By.Name("entry"));
+                foreach (IWebElement element in elements)
+                {
+                    ICollection<IWebElement> cellElements = element.FindElements(By.TagName("td"));
+                    IWebElement[] contactCells = new IWebElement[cellElements.Count];
+                    cellElements.CopyTo(contactCells, 0);
+
+                    contactCache.Add(new ContactData(contactCells[2].Text, "", contactCells[1].Text));
+                }
             }
 
-            return contacts;
+            return new List<ContactData>(contactCache);
         }
     }
 }
