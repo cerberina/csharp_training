@@ -10,14 +10,14 @@ namespace WebAddressbookTests
         public void ClientCreationTest()
         {
             ContactData contact = new ContactData("eee", "333", "vvv");
-            contact.Home = "111";
+            contact.HomePhone = "111";
             contact.Homepage = "qqq";
-            contact.Mobile = "123";
+            contact.MobilePhone = "123";
             contact.NickName = "www";
             contact.Notes = "eee";
-            contact.Phone2 = "456";
+            contact.Phone2 = "";
             contact.Title = "zzz";
-            contact.Work = "rrr";
+            contact.WorkPhone = "rrr";
             contact.Fax = "ttt";
             contact.Email3 = "yyy";
             contact.Email2 = "uuu";
