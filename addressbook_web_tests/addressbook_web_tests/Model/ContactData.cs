@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 namespace WebAddressbookTests
 {
@@ -10,6 +11,7 @@ namespace WebAddressbookTests
     {
         private string allPhones;
         private string allEmails;
+        private string allDetailedInformation;
 
         public ContactData (string firstname, string middlename, string lastname)
         {
@@ -43,18 +45,19 @@ namespace WebAddressbookTests
             return "Firstname =" + FirstName + "  and LastName=" + LastName;
 
         }
-        public string FullName (string FirstName, string LastName)
+        public string FirstAndLastNames (string FirstName, string LastName)
         {
-            string FullName = FirstName + LastName;
-            return FullName;
+            string FirstAndLastNames = FirstName + LastName;
+            return FirstAndLastNames;
         }
+
         public int CompareTo(ContactData other)
         {
             if (Object.ReferenceEquals(other, null))
             {
                 return 1;
             }
-            return FullName(FirstName,LastName).CompareTo(other.FullName(other.FirstName,other.LastName));
+            return FirstAndLastNames(FirstName,LastName).CompareTo(other.FirstAndLastNames(other.FirstName,other.LastName));
         }
 
         public string FirstName { get; set; }
@@ -102,7 +105,7 @@ namespace WebAddressbookTests
             {
                 return "";
             }
-           return phone.Replace(" ", "").Replace("-", "").Replace("(", "").Replace(")", "") + "\r\n";
+           return Regex.Replace(phone,"[ -()]","") + "\r\n";
         }
 
         public string Fax { get; set; }
@@ -151,5 +154,44 @@ namespace WebAddressbookTests
         public string Phone2 { get; set; }
 
         public string Notes { get; set; }
+
+        public string AllDetailedInformation
+        {
+            get
+            {
+                if (allDetailedInformation != null)
+                {
+                    return allDetailedInformation;
+                }
+                else
+                {
+                    string FullName = FirstName + " " + MiddleName + " " + LastName;
+                    return (FullName + "\r\n" 
+                        + NickName + "\r\n" 
+                        + Title + "\r\n" 
+                        + Company + "\r\n" 
+                        + Address + "\r\n"
+                        + "\r\n" + "H: " + HomePhone 
+                        + "\r\n" + "M: " + MobilePhone 
+                        + "\r\n" + "W: " + WorkPhone 
+                        + "\r\n" + "F: " + Fax 
+                        + "\r\n"
+                        + "\r\n" + Email 
+                        + "\r\n" + Email2 
+                        + "\r\n" + Email3 
+                        + "\r\n" + "Homepage:" 
+                        + "\r\n" + Homepage 
+                        + "\r\n"
+                        + "\r\n"
+                        + "\r\n" + Address2 
+                        + "\r\n"
+                        + "\r\n" + Notes).Trim();
+                }
+            }
+            set
+            {
+                allDetailedInformation = value;
+            }
+        }
     }
 }

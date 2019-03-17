@@ -26,6 +26,7 @@ namespace WebAddressbookTests
             manager.Navigator.GoToHomePage();
             InitContactModification(index);
             string firstName = driver.FindElement(By.Name("firstname")).GetAttribute("value");
+            string middleName = driver.FindElement(By.Name("middlename")).GetAttribute("value");
             string lastName = driver.FindElement(By.Name("lastname")).GetAttribute("value");
             string address = driver.FindElement(By.Name("address")).GetAttribute("value");
 
@@ -37,7 +38,15 @@ namespace WebAddressbookTests
             string email2 = driver.FindElement(By.Name("email2")).GetAttribute("value");
             string email3 = driver.FindElement(By.Name("email3")).GetAttribute("value");
 
-            return new ContactData(firstName, "", lastName)
+            string title = driver.FindElement(By.Name("title")).GetAttribute("value");
+            string company = driver.FindElement(By.Name("company")).GetAttribute("value");
+            string nickname = driver.FindElement(By.Name("nickname")).GetAttribute("value");
+            string homepage = driver.FindElement(By.Name("homepage")).GetAttribute("value");
+            string address_secondary = driver.FindElement(By.Name("address2")).GetAttribute("value");
+            string notes = driver.FindElement(By.Name("notes")).GetAttribute("value");
+            string fax = driver.FindElement(By.Name("fax")).GetAttribute("value");
+
+            return new ContactData(firstName, middleName, lastName)
             {
                 Address = address,
                 HomePhone = homePhone,
@@ -45,8 +54,40 @@ namespace WebAddressbookTests
                 WorkPhone = workPhone,
                 Email = email,
                 Email2 = email2,
-                Email3 = email3
+                Email3 = email3,
+                Title = title,
+                Company = company,
+                NickName = nickname,
+                Homepage = homepage,
+                Address2 = address_secondary,
+                Notes = notes,
+                Fax = fax
             };
+        }
+
+        public ContactData GetContactInformationFromDetails(int index)
+        {
+            manager.Navigator.GoToHomePage();
+            OpenContactDetailInformation(index);
+            string allDetailedInformation = driver.FindElement(By.Id("content")).Text;
+            return new ContactData("", "", "")
+            {
+                AllDetailedInformation = allDetailedInformation,
+            };
+        }
+
+        public ContactHelper OpenContactDetailInformation(int index)
+        {
+            manager.Navigator.GoToHomePage();
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+            wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath("//img[@alt='Details']")));
+
+            ICollection<IWebElement> humanIcon = driver.FindElements(By.XPath("//img[@alt='Details']"));
+            IWebElement[] selectHuman = new IWebElement[humanIcon.Count];
+            humanIcon.CopyTo(selectHuman, 0);
+
+            selectHuman[index].Click();
+            return this;
         }
 
         public ContactData GetContactInformationFromTable(int index)
