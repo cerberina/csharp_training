@@ -45,6 +45,7 @@ namespace WebAddressbookTests
             string address_secondary = driver.FindElement(By.Name("address2")).GetAttribute("value");
             string notes = driver.FindElement(By.Name("notes")).GetAttribute("value");
             string fax = driver.FindElement(By.Name("fax")).GetAttribute("value");
+            string phone2 = driver.FindElement(By.Name("phone2")).GetAttribute("value");
 
             return new ContactData(firstName, middleName, lastName)
             {
@@ -61,6 +62,7 @@ namespace WebAddressbookTests
                 Homepage = homepage,
                 Address2 = address_secondary,
                 Notes = notes,
+                Phone2 = phone2,
                 Fax = fax
             };
         }

@@ -108,13 +108,13 @@ namespace WebAddressbookTests
            return Regex.Replace(phone,"[ -()]","") + "\r\n";
         }
 
-        public string CleanUpForEmails(string email)
+        public string CleanUp(string str)
         {
-            if (email == null || email == "")
+            if (str == null || str == "")
             {
                 return "";
             }
-            return email + "\r\n";
+            return str + "\r\n";
         }
 
         public string Fax { get; set; }
@@ -135,7 +135,7 @@ namespace WebAddressbookTests
                 }
                 else
                 {
-                    return (CleanUpForEmails(Email) + CleanUpForEmails(Email2) + CleanUpForEmails(Email3)).Trim();
+                    return (CleanUp(Email) + CleanUp(Email2) + CleanUp(Email3)).Trim();
                 }
             }
                 set
@@ -174,27 +174,79 @@ namespace WebAddressbookTests
                 }
                 else
                 {
-                    string FullName = FirstName + " " + MiddleName + " " + LastName;
-                    return (FullName + "\r\n" 
-                        + NickName + "\r\n" 
-                        + Title + "\r\n" 
-                        + Company + "\r\n" 
-                        + Address + "\r\n"
-                        + "\r\n" + "H: " + HomePhone 
-                        + "\r\n" + "M: " + MobilePhone 
-                        + "\r\n" + "W: " + WorkPhone 
-                        + "\r\n" + "F: " + Fax 
+                    string h_phone = "";
+                    string m_phone = "";
+                    string w_phone = "";
+                    string fax = "";
+                    string phone_2 = "";
+                    string home_page = "";
+                    string fullName = FirstName + " " + MiddleName + " " + LastName;
+
+                    if (HomePhone == "")
+                    {
+                        h_phone = "";
+                    }
+                    else
+                    {
+                        h_phone = "H: " + CleanUp(HomePhone);
+                    };
+
+                    if (MobilePhone == "")
+                    {
+                        m_phone = "";
+                    }
+                    else
+                    {
+                        m_phone = "M: " + CleanUp(MobilePhone);
+                    };
+
+                    if (WorkPhone == "")
+                    {
+                        w_phone = "";
+                    }
+                    else
+                    {
+                        w_phone = "W: " + CleanUp(WorkPhone);
+                    };
+
+                    if (Fax == "")
+                    {
+                        fax = "";
+                    }
+                    else
+                    {
+                        fax = "F: " + CleanUp(Fax);
+                    };
+                    
+                    if (Homepage == "")
+                    {
+                        home_page = "";
+                    }
+                    else
+                    {
+                        home_page = "Homepage:" + "\r\n" + CleanUp(Homepage);
+                    };
+
+                    if (Phone2 == "")
+                    {
+                        phone_2 = "";
+                    }
+                    else
+                    {
+                        phone_2 = "P: " + CleanUp(Phone2);
+                    };
+
+                    return (CleanUp(fullName) + CleanUp(NickName) + CleanUp(Title) + CleanUp(Company) + CleanUp(Address)
                         + "\r\n"
-                        + "\r\n" + Email 
-                        + "\r\n" + Email2 
-                        + "\r\n" + Email3 
-                        + "\r\n" + "Homepage:" 
-                        + "\r\n" + Homepage 
+                        + h_phone + m_phone  + w_phone + fax 
+                        + "\r\n"
+                        + CleanUp(Email) + CleanUp(Email2) + CleanUp(Email3) + home_page 
                         + "\r\n"
                         + "\r\n"
-                        + "\r\n" + Address2 
+                        + CleanUp(Address2)
                         + "\r\n"
-                        + "\r\n" + Notes).Trim();
+                        + phone_2
+                        + CleanUp(Notes)).Trim();
                 }
             }
             set
