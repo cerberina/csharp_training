@@ -182,56 +182,32 @@ namespace WebAddressbookTests
                     string home_page = "";
                     string fullName = FirstName + " " + MiddleName + " " + LastName;
 
-                    if (HomePhone == "")
-                    {
-                        h_phone = "";
-                    }
-                    else
+                    if (HomePhone != "")
                     {
                         h_phone = "H: " + CleanUp(HomePhone);
                     };
 
-                    if (MobilePhone == "")
-                    {
-                        m_phone = "";
-                    }
-                    else
+                    if (MobilePhone != "")
                     {
                         m_phone = "M: " + CleanUp(MobilePhone);
                     };
 
-                    if (WorkPhone == "")
-                    {
-                        w_phone = "";
-                    }
-                    else
+                    if (WorkPhone != "")
                     {
                         w_phone = "W: " + CleanUp(WorkPhone);
                     };
 
-                    if (Fax == "")
-                    {
-                        fax = "";
-                    }
-                    else
+                    if (Fax != "")
                     {
                         fax = "F: " + CleanUp(Fax);
                     };
                     
-                    if (Homepage == "")
-                    {
-                        home_page = "";
-                    }
-                    else
+                    if (Homepage != "")
                     {
                         home_page = "Homepage:" + "\r\n" + CleanUp(Homepage);
                     };
 
-                    if (Phone2 == "")
-                    {
-                        phone_2 = "";
-                    }
-                    else
+                    if (Phone2 != "")
                     {
                         phone_2 = "P: " + CleanUp(Phone2);
                     };
