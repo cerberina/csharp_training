@@ -36,7 +36,7 @@ namespace WebAddressbookTests
         public override String ToString()
         {
 
-            return "name=" + Name;
+            return " name=" + Name + "\n header=" + Header + "\n footer=" + Footer;
         
         }
 
