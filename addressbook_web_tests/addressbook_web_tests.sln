@@ -5,6 +5,11 @@ VisualStudioVersion = 15.0.28307.421
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "addressbook_web_tests", "addressbook_web_tests\addressbook_web_tests.csproj", "{34EEAE97-8441-46FD-947E-0F4A9944241B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "addressbook_test_data_generators", "addressbook_test_data_generators\addressbook_test_data_generators.csproj", "{6369FF7F-CA78-480D-820E-45D8745B6B90}"
+	ProjectSection(ProjectDependencies) = postProject
+		{34EEAE97-8441-46FD-947E-0F4A9944241B} = {34EEAE97-8441-46FD-947E-0F4A9944241B}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +26,14 @@ Global
 		{34EEAE97-8441-46FD-947E-0F4A9944241B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{34EEAE97-8441-46FD-947E-0F4A9944241B}.Release|x86.ActiveCfg = Release|x86
 		{34EEAE97-8441-46FD-947E-0F4A9944241B}.Release|x86.Build.0 = Release|x86
+		{6369FF7F-CA78-480D-820E-45D8745B6B90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6369FF7F-CA78-480D-820E-45D8745B6B90}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6369FF7F-CA78-480D-820E-45D8745B6B90}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{6369FF7F-CA78-480D-820E-45D8745B6B90}.Debug|x86.Build.0 = Debug|Any CPU
+		{6369FF7F-CA78-480D-820E-45D8745B6B90}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6369FF7F-CA78-480D-820E-45D8745B6B90}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6369FF7F-CA78-480D-820E-45D8745B6B90}.Release|x86.ActiveCfg = Release|Any CPU
+		{6369FF7F-CA78-480D-820E-45D8745B6B90}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
