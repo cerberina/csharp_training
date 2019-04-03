@@ -144,7 +144,7 @@ namespace WebAddressbookTests
             return this;
         }
 
-        internal ContactHelper Remove(int v)
+        public ContactHelper Remove(int v)
         {
             manager.Navigator.GoToHomePage();
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
@@ -155,6 +155,19 @@ namespace WebAddressbookTests
 
             return this;
         }
+
+        public ContactHelper Remove(ContactData contact)
+        {
+            manager.Navigator.GoToHomePage();
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+            wait.Until(ExpectedConditions.ElementIsVisible(By.Id("maintable")));
+            SelectContact(contact.Id);
+            RemoveContact();
+            manager.Navigator.GoToHomePage();
+
+            return this;
+        }
+
 
         public ContactHelper RemoveContact()
         {
@@ -174,6 +187,15 @@ namespace WebAddressbookTests
             checkboxes.CopyTo(selectBoxes, 0);
 
             selectBoxes[i].Click();
+            return this;
+        }
+
+        public ContactHelper SelectContact(string id)
+        {
+            WebDriverWait wait2 = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+            wait2.Until(ExpectedConditions.ElementToBeClickable(By.Name("selected[]")));
+
+            driver.FindElement(By.XPath("(//input[@name='selected[]' and @value='" + id + "'])")).Click();
             return this;
         }
 

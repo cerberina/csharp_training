@@ -4,9 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
+using LinqToDB.Mapping;
+using System.Collections;
+using System.Linq.Expressions;
 
 namespace WebAddressbookTests
 {
+    [Table(Name = "addressbook")]
     public class ContactData: IEquatable<ContactData>, IComparable<ContactData>
     {
         private string allPhones;
@@ -63,110 +67,66 @@ namespace WebAddressbookTests
             }
             return FirstAndLastNames(FirstName,LastName).CompareTo(other.FirstAndLastNames(other.FirstName,other.LastName));
         }
-
+        [Column(Name = "firstname")]
         public string FirstName { get; set; }
-        
+        [Column(Name = "middlename")]
         public string MiddleName { get; set; }
-        
+        [Column(Name = "lastname")]
         public string LastName { get; set; }
-        
+        [Column(Name = "nickname")]
         public string NickName { get; set; }
-       
+        [Column(Name = "title")]
         public string Title { get; set; }
-       
+        [Column(Name = "company")]
         public string Company { get; set; }
-       
+        [Column(Name = "address")]
         public string Address { get; set; }
-        
+        [Column(Name = "home")]
         public string HomePhone { get; set; }
-
+        [Column(Name = "mobile")]
         public string MobilePhone { get; set; }
-
+        [Column(Name = "work")]
         public string WorkPhone { get; set; }
-
-        public string AllPhones
-        {
-            get
-            {
-                if (allPhones != null)
-                {
-                    return allPhones;
-                }
-                else
-                {
-                    return (CleanUpForPhones(HomePhone) + CleanUpForPhones(MobilePhone) + CleanUpForPhones(WorkPhone)).Trim();
-                }
-            }
-            set
-            {
-                allPhones = value;
-            }
-        }
-
-        public string CleanUpForPhones(string phone)
-        {
-            if (phone == null || phone == "")
-            {
-                return "";
-            }
-           return Regex.Replace(phone,"[ -()]","") + "\r\n";
-        }
-
-        public string CleanUp(string str)
-        {
-            if (str == null || str == "")
-            {
-                return "";
-            }
-            return str + "\r\n";
-        }
-
+        [Column(Name = "fax")]
         public string Fax { get; set; }
-
+        [Column(Name = "email")]
         public string Email { get; set; }
-        
+        [Column(Name = "email2")]
         public string Email2 { get; set; }
-        
+        [Column(Name = "email3")]
         public string Email3 { get; set; }
+        [Column(Name = "homepage")]
+        public string Homepage { get; set; }
+        [Column(Name = "bday")]
+        public string Bday { get; set; }
+        [Column(Name = "bmonth")]
+        public string Bmonth { get; set; }
+        [Column(Name = "byear")]
+        public string Byear { get; set; }
+        [Column(Name = "aday")]
+        public string Aday { get; set; }
+        [Column(Name = "amonth")]
+        public string Amonth { get; set; }
+        [Column(Name = "ayear")]
+        public string Ayear { get; set; }
+        [Column(Name = "address2")]
+        public string Address2 { get; set; }
+        [Column(Name = "phone2")]
+        public string Phone2 { get; set; }
+        [Column(Name = "notes")]
+        public string Notes { get; set; }
+        [Column(Name = "id")]
+        public string Id { get; set; }
+        [Column(Name = "deprecated")]
+        public string deprecated { get; set; }
 
-        public string AllEmails
+        public static List<ContactData> GetAll()
         {
-            get
+            using (AddressBookDB db = new AddressBookDB())
             {
-                if (allEmails != null)
-                {
-                    return allEmails;
-                }
-                else
-                {
-                    return (CleanUp(Email) + CleanUp(Email2) + CleanUp(Email3)).Trim();
-                }
-            }
-                set
-            {
-                allEmails = value;
+                return (from c in db.Contacts where c.deprecated == "0000-00-00 00:00:00" select c ).ToList();
             }
         }
-
-        public string Homepage { get; set; }
-        
-        public string Bday { get; set; }
-        
-        public string Bmonth { get; set; }
-        
-        public string Byear { get; set; }
-
-        public string Aday { get; set; }
-
-        public string Amonth { get; set; }
-
-        public string Ayear { get; set; }
-
-        public string Address2 { get; set; }
-
-        public string Phone2 { get; set; }
-
-        public string Notes { get; set; }
 
         public string AllDetailedInformation
         {
@@ -233,6 +193,65 @@ namespace WebAddressbookTests
             {
                 allDetailedInformation = value;
             }
+        }
+        public string AllEmails
+        {
+            get
+            {
+                if (allEmails != null)
+                {
+                    return allEmails;
+                }
+                else
+                {
+                    return (CleanUp(Email) + CleanUp(Email2) + CleanUp(Email3)).Trim();
+                }
+            }
+            set
+            {
+                allEmails = value;
+            }
+        }
+        public string AllPhones
+        {
+            get
+            {
+                if (allPhones != null)
+                {
+                    return allPhones;
+                }
+                else
+                {
+                    return (CleanUpForPhones(HomePhone) + CleanUpForPhones(MobilePhone) + CleanUpForPhones(WorkPhone)).Trim();
+                }
+            }
+            set
+            {
+                allPhones = value;
+            }
+        }
+
+        //public Expression Expression => throw new NotImplementedException();
+
+        //public Type ElementType => throw new NotImplementedException();
+
+        //public IQueryProvider Provider => throw new NotImplementedException();
+
+        public string CleanUpForPhones(string phone)
+        {
+            if (phone == null || phone == "")
+            {
+                return "";
+            }
+            return Regex.Replace(phone, "[ -()]", "") + "\r\n";
+        }
+        public string CleanUp(string str)
+        {
+            if (str == null || str == "")
+            {
+                return "";
+            }
+            return str + "\r\n";
         }
     }
 }

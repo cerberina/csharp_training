@@ -51,21 +51,22 @@ namespace WebAddressbookTests
         {
             return JsonConvert.DeserializeObject<List<ContactData>>(File.ReadAllText(@"contacts.json"));
         }
-
+      
         [Test, TestCaseSource("ContactDataFromJsonFile")]
         public void ClientCreationTest(ContactData contact)
         {
-            List<ContactData> oldContacts = app.Contacts.GetContactList();
+            List<ContactData> oldContacts = ContactData.GetAll();
 
             app.Contacts.Create(contact);
-
-            List<ContactData> newContacts = app.Contacts.GetContactList();
             oldContacts.Add(contact);
+
+            List<ContactData> newContacts = ContactData.GetAll();
             oldContacts.Sort();
             newContacts.Sort();
 
             Assert.AreEqual(oldContacts, newContacts);
             //app.Auth.Logout();
         }
+
     }
 }

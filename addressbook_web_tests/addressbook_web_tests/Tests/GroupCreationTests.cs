@@ -59,11 +59,11 @@ namespace WebAddressbookTests
         [Test, TestCaseSource("GroupDataFromJsonFile")]
         public void GroupCreationTest(GroupData group)
         {
-            List<GroupData> oldGroups = app.Groups.GetGroupList();
+            List<GroupData> oldGroups = GroupData.GetAll();
 
             app.Groups.Create(group);
 
-            List<GroupData> newGroups = app.Groups.GetGroupList();
+            List<GroupData> newGroups = GroupData.GetAll();
             oldGroups.Add(group);
             oldGroups.Sort();
             newGroups.Sort();
@@ -72,5 +72,10 @@ namespace WebAddressbookTests
             //app.Auth.Logout();
         }
 
+        [Test]
+        public void TestDBConnection()
+        {
+            List<GroupData> fromDb = GroupData.GetAll();
+        }
     }
 }
