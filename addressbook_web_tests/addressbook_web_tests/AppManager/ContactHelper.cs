@@ -124,6 +124,19 @@ namespace WebAddressbookTests
             return this;
         }
 
+
+        public ContactHelper Modify(ContactData contact, ContactData newData)
+        {
+            manager.Navigator.GoToHomePage();
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+            wait.Until(ExpectedConditions.ElementIsVisible(By.Id("maintable")));
+            InitContactModification(contact.Id);
+            FillClientForm(newData);
+            SubmitContactModification();
+            manager.Navigator.GoToHomePage();
+            return this;
+        }
+
         private ContactHelper SubmitContactModification()
         {
             driver.FindElement(By.Name("update")).Click();
@@ -143,6 +156,16 @@ namespace WebAddressbookTests
             selectPencils[j].Click();
             return this;
         }
+
+        private ContactHelper InitContactModification(string id)
+        {
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+            wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath("//img[@alt='Edit']")));
+
+            driver.FindElement(By.XPath("//a[@href=\"edit.php?id=" + id + "\"]")).Click();
+            return this;
+        }
+
 
         public ContactHelper Remove(int v)
         {

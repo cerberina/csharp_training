@@ -38,9 +38,9 @@ namespace WebAddressbookTests
 
             app.Contacts.EnsureContactExists();
             List<ContactData> oldContacts = ContactData.GetAll();
-            //ContactData oldData = oldContacts[0];
+            ContactData oldData = oldContacts[0];
 
-            app.Contacts.Modify(0,newData);
+            app.Contacts.Modify(oldData, newData);
 
             List<ContactData> newContacts = ContactData.GetAll();
             oldContacts[0].FirstName = newData.FirstName;
