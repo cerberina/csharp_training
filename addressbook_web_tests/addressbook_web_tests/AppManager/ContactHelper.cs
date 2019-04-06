@@ -21,6 +21,60 @@ namespace WebAddressbookTests
             return this;
         }
 
+        public void RemoveContactFromGroup(ContactData contact, GroupData group)
+        {
+            manager.Navigator.GoToHomePage();
+            ClearGroupFilter();
+            OpenContactDetailInformation(contact.Id);
+            SelectGroupToRemoveFrom(group.Id);
+            SelectContact(contact.Id);
+
+            CommitRemovingContactFromGroup();
+
+            new WebDriverWait(driver, TimeSpan.FromSeconds(10))
+                .Until(d => d.FindElements(By.CssSelector("div.msgbox")).Count > 0);
+        }
+
+        private void CommitRemovingContactFromGroup()
+        {
+            driver.FindElement(By.Name("remove")).Click();
+        }
+
+        private void SelectGroupToRemoveFrom(string groupId)
+        {
+            driver.FindElement(By.XPath("//a[@href=\"./index.php?group=" + groupId + "\"]")).Click();
+        }
+
+        public void AddContactToGroup(ContactData contact, GroupData group)
+        {
+            manager.Navigator.GoToHomePage();
+            ClearGroupFilter();
+            SelectContact(contact.Id);
+
+            SelectGroupToAdd(group.Name);
+            CommitAddingContactToGroup();
+            new WebDriverWait(driver, TimeSpan.FromSeconds(10))
+                .Until(d => d.FindElements(By.CssSelector("div.msgbox")).Count > 0);
+
+        }
+
+        private void CommitAddingContactToGroup()
+        {
+            driver.FindElement(By.Name("add")).Click();
+        }
+
+        private void SelectGroupToAdd(string groupName)
+        {
+            new SelectElement(driver.FindElement(By.Name("to_group"))).SelectByText(groupName);
+        }
+
+        private void ClearGroupFilter()
+        {
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+            wait.Until(ExpectedConditions.ElementToBeClickable(driver.FindElement(By.Name("group"))));
+            new SelectElement(driver.FindElement(By.Name("group"))).SelectByText("[all]");
+        }
+
         public ContactData GetContactInformationFromEditForm(int index)
         {
             manager.Navigator.GoToHomePage();
@@ -89,6 +143,15 @@ namespace WebAddressbookTests
             humanIcon.CopyTo(selectHuman, 0);
 
             selectHuman[index].Click();
+            return this;
+        }
+
+        public ContactHelper OpenContactDetailInformation(string id)
+        {
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+            wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath("//img[@alt='Details']")));
+
+            driver.FindElement(By.XPath("//a[@href=\"view.php?id=" + id + "\"]")).Click();
             return this;
         }
 

@@ -115,7 +115,7 @@ namespace WebAddressbookTests
         public string Phone2 { get; set; }
         [Column(Name = "notes")]
         public string Notes { get; set; }
-        [Column(Name = "id")]
+        [Column(Name = "id"), PrimaryKey]
         public string Id { get; set; }
         [Column(Name = "deprecated")]
         public string deprecated { get; set; }
