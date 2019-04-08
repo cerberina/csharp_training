@@ -22,20 +22,50 @@ namespace WebAddressbookTests
             return this;
         }
 
-        public void EnsureContactsExists(List<ContactData> oldList)
+        public void EnsureContactsInGroupExists(GroupData group)
         {
-            if (!IsContactsExists(oldList))
+            if (!IsContactsInGroupExists(group))
             {
-                ContactData con = new ContactData("test", "test1", "test2");
-                Create(con);
+                EnsureContactsExists();
+                ContactData contact = ContactData.GetAll().First();
+                AddContactToGroup(contact, group);
             };
         }
 
-        private bool IsContactsExists(List<ContactData> oldList)
+        private bool IsContactsInGroupExists(GroupData group)
         {
+            List<ContactData> oldList = group.GetContacts();
             return oldList.Count != 0;
         }
 
+        public GroupData IsContactInAnyGroup (List<GroupData> groups)
+        {
+            GroupData group = groups[0];
+         
+            List<ContactData> contactsInGroup = group.GetContacts();
+            ContactData contact = ContactData.GetAll().First();
+            if (IsContactInGroup(contact, group))
+            {
+                foreach (GroupData gr in groups)
+                {
+                    if (!IsContactInGroup(contact, gr))
+                    {
+                        return gr;
+                    }
+                }
+                ContactData con = new ContactData("test", "test1", "test2");
+                Create(con);
+                return group;
+            }
+            else return group;
+                
+        }
+
+        public bool IsContactInGroup(ContactData contact, GroupData group)
+        {
+            List<ContactData> contactsInGroup = group.GetContacts();
+            return contactsInGroup.Contains(contact);
+        }
 
         public void RemoveContactFromGroup(ContactData contact, GroupData group)
         {
@@ -355,6 +385,19 @@ namespace WebAddressbookTests
             return IsElementPresent(By.Id("maintable"));
         }
 
+        private bool IsContactsExists()
+        {
+            return ContactData.GetAll().Count != 0;
+        }
+
+        public void EnsureContactsExists()
+        {
+            if (!IsContactsExists())
+            {
+                ContactData con = new ContactData("first","middle","last");
+                Create(con);
+            }
+        }
 
         public void EnsureContactExists()
         {

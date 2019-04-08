@@ -23,7 +23,7 @@ namespace WebAddressbookTests
             return this;
         }
 
-        public bool IsGroupsExists()
+        private bool IsGroupsExists()
         {
             return GroupData.GetAll().Count != 0;
         }

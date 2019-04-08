@@ -13,15 +13,15 @@ namespace WebAddressbookTests
         public void TestAddingContactToGroup()
         {
             app.Groups.EnsureGroupsExists();
+            app.Contacts.EnsureContactsExists();
+            List<GroupData> groups = GroupData.GetAll();
 
-            GroupData group = GroupData.GetAll()[0];
+            GroupData group = app.Contacts.IsContactInAnyGroup(groups);
 
             List<ContactData> oldList = group.GetContacts();
 
-            app.Contacts.EnsureContactsExists(oldList);
-
             ContactData contact = ContactData.GetAll().Except(oldList).First();
-            
+
             app.Contacts.AddContactToGroup(contact,group);
 
             List<ContactData> newList = group.GetContacts();
