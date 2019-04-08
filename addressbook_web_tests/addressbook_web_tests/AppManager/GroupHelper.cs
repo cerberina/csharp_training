@@ -23,6 +23,20 @@ namespace WebAddressbookTests
             return this;
         }
 
+        public bool IsGroupsExists()
+        {
+            return GroupData.GetAll().Count != 0;
+        }
+
+        public void EnsureGroupsExists()
+        {
+                if (!IsGroupsExists())
+                {
+                    GroupData gr = new GroupData("test");
+                    Create(gr);
+                }
+        }
+
         public GroupHelper Remove(GroupData group)
         {
             manager.Navigator.GoToGroupsPage();

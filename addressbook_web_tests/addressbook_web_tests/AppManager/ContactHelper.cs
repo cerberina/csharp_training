@@ -2,6 +2,7 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace WebAddressbookTests
 {
@@ -20,6 +21,21 @@ namespace WebAddressbookTests
             
             return this;
         }
+
+        public void EnsureContactsExists(List<ContactData> oldList)
+        {
+            if (!IsContactsExists(oldList))
+            {
+                ContactData con = new ContactData("test", "test1", "test2");
+                Create(con);
+            };
+        }
+
+        private bool IsContactsExists(List<ContactData> oldList)
+        {
+            return oldList.Count != 0;
+        }
+
 
         public void RemoveContactFromGroup(ContactData contact, GroupData group)
         {
